@@ -20,6 +20,7 @@ struct EmojiMemoryGameView: View {
             title
             ScrollView{
                 cards
+                    .animation(.default, value: viewModel.cards)
             }
             Button("Shuffle") {
                 viewModel.shuffle()
@@ -32,7 +33,7 @@ struct EmojiMemoryGameView: View {
         Text("Memorize!")
             .font(.title)
             .padding()
-            .foregroundColor(.gray)
+            .foregroundColor(Color.gray)
     }
     
     // Defines card part
@@ -41,10 +42,13 @@ struct EmojiMemoryGameView: View {
         // lazyGrid will use space as less as it can, but HStack takes as much as it can
         return LazyVGrid (columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0){
             // Cannot do for loop here for emoji assignment
-            ForEach(viewModel.cards.indices, id: \.self) { index in
-                CardView(viewModel.cards[index])
+            ForEach(viewModel.cards) { card in
+                CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(2)
+                    .onTapGesture {
+                        viewModel.choose(card)
+                    }
             }
         }
         .padding()
@@ -74,6 +78,7 @@ struct EmojiMemoryGameView: View {
                 .opacity(card.isFaceUp ? 1 : 0)
                 base.fill().opacity(card.isFaceUp ? 0 : 1)
             }
+            .opacity(card.isMatched ? 0 : 1)
         }
     }
 }
