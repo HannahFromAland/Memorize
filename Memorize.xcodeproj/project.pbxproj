@@ -13,6 +13,7 @@
 		4139009E2C37AF86002E0E13 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4139009D2C37AF86002E0E13 /* Preview Assets.xcassets */; };
 		413900A52C4325E5002E0E13 /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A42C4325E5002E0E13 /* MemoryGame.swift */; };
 		413900A72C4328A8002E0E13 /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */; };
+		413900A92C48BB79002E0E13 /* ThemeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A82C48BB79002E0E13 /* ThemeSelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		4139009D2C37AF86002E0E13 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		413900A42C4325E5002E0E13 /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
+		413900A82C48BB79002E0E13 /* ThemeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				413900962C37AF84002E0E13 /* MemorizeApp.swift */,
+				413900A82C48BB79002E0E13 /* ThemeSelector.swift */,
 				413900982C37AF84002E0E13 /* EmojiMemoryGameView.swift */,
 				413900A42C4325E5002E0E13 /* MemoryGame.swift */,
 				413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				413900992C37AF84002E0E13 /* EmojiMemoryGameView.swift in Sources */,
+				413900A92C48BB79002E0E13 /* ThemeSelector.swift in Sources */,
 				413900972C37AF84002E0E13 /* MemorizeApp.swift in Sources */,
 				413900A52C4325E5002E0E13 /* MemoryGame.swift in Sources */,
 				413900A72C4328A8002E0E13 /* EmojiMemoryGame.swift in Sources */,

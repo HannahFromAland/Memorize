@@ -56,7 +56,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 
     mutating func shuffle() {
         cards.shuffle()
-        print(cards)
+    }
+    
+    mutating func restart() {
+        cards.shuffle()
+        cards.indices.forEach { index in
+            cards[index].isMatched = false
+            cards[index].isFaceUp = false
+        }
     }
     
     // nested struct
