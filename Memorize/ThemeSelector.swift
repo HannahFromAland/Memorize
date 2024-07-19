@@ -19,7 +19,7 @@ struct ThemeSelector {
         // supporting 6 distinct themes
         switch id {
         case 0:
-            let emojis = ["🥯","🍞","🥖","🥨","🥐","🥪","🍔"]
+            let emojis = ["🥯","🍞","🥖","🥨","🥐","🥪","🍔","🧇","🥞","🍕","🍰"]
             return Theme(name: "backery", nPair: nPair, color: "yellow", emojiSet: emojis)
         case 1:
             let emojis = ["🐶","🐱","🐭","🐹","🐰","🐻","🦊","🐻‍❄️","🐨","🐯","🦁"]

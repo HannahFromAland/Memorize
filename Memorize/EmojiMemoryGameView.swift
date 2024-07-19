@@ -17,7 +17,12 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack (spacing: 10){
-            title
+            VStack {
+                title
+                Text("Score: \(viewModel.score)")
+                    .font(.title2)
+            }
+            
             ScrollView{
                 cards
                     .animation(.default, value: viewModel.cards)
@@ -37,7 +42,7 @@ struct EmojiMemoryGameView: View {
     
     // Defines the title for the game
     var title: some View {
-        Text("Memorize!")
+        Text("Memorize \(viewModel.theme.name)!")
             .font(.title)
             .padding()
             .foregroundColor(Color.gray)
@@ -49,7 +54,7 @@ struct EmojiMemoryGameView: View {
         // implicit return
         // lazyGrid will use space as less as it can, but HStack takes as much as it can
         let themeColor = EmojiMemoryGame.intepretColor(viewModel.theme.color)
-        return LazyVGrid (columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0){
+        return LazyVGrid (columns: [GridItem(.adaptive(minimum: 90), spacing: 0)], spacing: 0){
             // Cannot do for loop here for emoji assignment
             ForEach(viewModel.cards) { card in
                 CardView(card)
