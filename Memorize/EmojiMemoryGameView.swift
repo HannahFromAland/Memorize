@@ -14,6 +14,7 @@ struct EmojiMemoryGameView: View {
     
     // Never let ObservedObject equals to anything
     @ObservedObject var viewModel: EmojiMemoryGame
+    private let aspectRatio: CGFloat = 2/3
     
     var body: some View {
         VStack (spacing: 10){
@@ -22,11 +23,8 @@ struct EmojiMemoryGameView: View {
                 Text("Score: \(viewModel.score)")
                     .font(.title2)
             }
-            
-            ScrollView{
-                cards
-                    .animation(.default, value: viewModel.cards)
-            }
+            cards
+                .animation(.default, value: viewModel.cards)
             HStack{
                 Button("Shuffle") {
                     viewModel.shuffle()
@@ -50,23 +48,17 @@ struct EmojiMemoryGameView: View {
 
     
     // Defines card part
-    var cards: some View {
+    private var cards: some View {
         // implicit return
         // lazyGrid will use space as less as it can, but HStack takes as much as it can
-        let themeColor = EmojiMemoryGame.intepretColor(viewModel.theme.color)
-        return LazyVGrid (columns: [GridItem(.adaptive(minimum: 90), spacing: 0)], spacing: 0){
-            // Cannot do for loop here for emoji assignment
-            ForEach(viewModel.cards) { card in
-                CardView(card)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(2)
-                    .onTapGesture {
-                        viewModel.choose(card)
-                    }
-            }
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
+            CardView(card)
+                .padding(4)
+                .onTapGesture {
+                    viewModel.choose(card)
+                }
         }
-        .padding()
-        .foregroundColor(themeColor)
+            .foregroundColor(EmojiMemoryGame.intepretColor(viewModel.theme.color))
     }
     
     // Define each card, which has the state of face up or face down, with emoji as content on the card

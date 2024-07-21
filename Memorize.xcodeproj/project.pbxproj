@@ -14,6 +14,7 @@
 		413900A52C4325E5002E0E13 /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A42C4325E5002E0E13 /* MemoryGame.swift */; };
 		413900A72C4328A8002E0E13 /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */; };
 		413900A92C48BB79002E0E13 /* ThemeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900A82C48BB79002E0E13 /* ThemeSelector.swift */; };
+		41ABD0F22C4CADD300ABB33F /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41ABD0F12C4CADD300ABB33F /* AspectVGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		413900A42C4325E5002E0E13 /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 		413900A82C48BB79002E0E13 /* ThemeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelector.swift; sourceTree = "<group>"; };
+		41ABD0F12C4CADD300ABB33F /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				413900962C37AF84002E0E13 /* MemorizeApp.swift */,
 				413900A82C48BB79002E0E13 /* ThemeSelector.swift */,
 				413900982C37AF84002E0E13 /* EmojiMemoryGameView.swift */,
+				41ABD0F12C4CADD300ABB33F /* AspectVGrid.swift */,
 				413900A42C4325E5002E0E13 /* MemoryGame.swift */,
 				413900A62C4328A8002E0E13 /* EmojiMemoryGame.swift */,
 				4139009A2C37AF86002E0E13 /* Assets.xcassets */,
@@ -148,6 +151,7 @@
 			files = (
 				413900992C37AF84002E0E13 /* EmojiMemoryGameView.swift in Sources */,
 				413900A92C48BB79002E0E13 /* ThemeSelector.swift in Sources */,
+				41ABD0F22C4CADD300ABB33F /* AspectVGrid.swift in Sources */,
 				413900972C37AF84002E0E13 /* MemorizeApp.swift in Sources */,
 				413900A52C4325E5002E0E13 /* MemoryGame.swift in Sources */,
 				413900A72C4328A8002E0E13 /* EmojiMemoryGame.swift in Sources */,
