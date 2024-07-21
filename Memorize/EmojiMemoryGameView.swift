@@ -48,25 +48,29 @@ struct EmojiMemoryGameView: View {
 
     
     // Defines card part
+    @ViewBuilder
     private var cards: some View {
         // implicit return
         // lazyGrid will use space as less as it can, but HStack takes as much as it can
+        let colorList = viewModel.theme.color.map { EmojiMemoryGame.intepretColor($0)}
         AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
-            CardView(card)
+            CardView(card, colorList: colorList)
                 .padding(4)
                 .onTapGesture {
                     viewModel.choose(card)
                 }
         }
-            .foregroundColor(EmojiMemoryGame.intepretColor(viewModel.theme.color))
+        .foregroundColor(colorList.first)
     }
     
     // Define each card, which has the state of face up or face down, with emoji as content on the card
     struct CardView: View {
         let card: MemoryGame<String>.Card
+        let colorList: [Color]
         
-        init(_ card: MemoryGame<String>.Card) {
+        init(_ card: MemoryGame<String>.Card, colorList: [Color]) {
             self.card = card
+            self.colorList = colorList
         }
         // @State will create a pointer for isFaceUp which will never change, so the content it is pointing to can change
         @State var isFaceUp = false
@@ -74,7 +78,11 @@ struct EmojiMemoryGameView: View {
             ZStack {
                 let base = RoundedRectangle(cornerRadius: 12)
                 Group {
-                    base.fill(.white)
+                    if colorList.count > 1 {
+                        base.fill(Gradient(colors: colorList))
+                    } else {
+                        base.fill(.white)
+                    }
                     base.strokeBorder(lineWidth: 2)
                     Text(card.content)
                         .font(.system(size:60))

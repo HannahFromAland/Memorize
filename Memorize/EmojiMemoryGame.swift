@@ -57,6 +57,8 @@ class EmojiMemoryGame: ObservableObject {
             return Color.pink
         case "purple":
             return Color.purple
+        case "orange":
+            return Color.orange
         default:
             return Color.black
         }
