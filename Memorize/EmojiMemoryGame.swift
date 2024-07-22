@@ -68,12 +68,25 @@ class EmojiMemoryGame: ObservableObject {
         return model.score
     }
     
+    var timer: Date? {
+        return model.startTime
+    }
+    
+    var usedTimeFormatted: String {
+        let minutes = Int((model.timeInterval).rounded(.down)) / 60
+        let seconds = Int((model.timeInterval).rounded(.down)) % 60
+        return String(format: "%d:%02d", minutes, seconds)
+    }
+    
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
     }
     // MARK: Intents
     func shuffle() {
         model.shuffle()
+    }
+    func pause() {
+        model.pause()
     }
     // intent function
     func choose(_ card: MemoryGame<String>.Card) {
