@@ -10,6 +10,7 @@ import SwiftUI
 // ViewModel is part of the UI, but not going to be creating views/UI
 
 class EmojiMemoryGame: ObservableObject {
+    typealias Card = MemoryGame<String>.Card
     // static property will be global but only in its namespace, use EmojiMemoryGame.emojis
     // Normally static properties goes first in the class
     // class only gets free init which has nothing(no argument), so still needs to be inited
@@ -78,7 +79,7 @@ class EmojiMemoryGame: ObservableObject {
         return String(format: "%d:%02d", minutes, seconds)
     }
     
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: Array<Card> {
         return model.cards
     }
     // MARK: Intents
@@ -89,7 +90,7 @@ class EmojiMemoryGame: ObservableObject {
         model.pause()
     }
     // intent function
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: Card) {
         model.choose(card)
     }
     func restart() {
