@@ -14,7 +14,7 @@ struct CardView: View {
     let card: Card
     let colorList: [Color]
     
-    init(_ card: MemoryGame<String>.Card, colorList: [Color]) {
+    init(_ card: Card, colorList: [Color]) {
         self.card = card
         self.colorList = colorList
     }
@@ -22,26 +22,19 @@ struct CardView: View {
     // @State will create a pointer for isFaceUp which will never change, so the content it is pointing to can change
     @State var isFaceUp = false
     var body: some View {
-        ZStack {
-            let base = RoundedRectangle(cornerRadius: Constants.cornerRadius)
-            Group {
-                if colorList.count > 1 {
-                    base.fill(Gradient(colors: colorList))
-                } else {
-                    base.fill(.white)
-                }
-                base.strokeBorder(lineWidth: Constants.lineWidth)
+        Pie(endAngle: .degrees(120))
+            .opacity(Constants.Pie.opacity)
+            .overlay(
                 Text(card.content)
                     .font(.system(size:Constants.FontSize.largest))
                     .minimumScaleFactor(Constants.FontSize.scaleFactor)
                     .multilineTextAlignment(.center)
                     .aspectRatio(1, contentMode: .fit)
-                    .padding(Constants.inset)
-            }
-            .opacity(card.isFaceUp ? 1 : 0)
-            base.fill().opacity(card.isFaceUp ? 0 : 1)
-        }
-        .opacity(card.isMatched ? 0 : 1)
+                    .padding(Constants.Pie.inset)
+            )
+            .padding(Constants.inset)
+            .cardify(isFaceUp: card.isFaceUp, isMatched: card.isMatched)
+            .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
     }
     
     private struct Constants {
@@ -53,11 +46,15 @@ struct CardView: View {
             static let smallest: CGFloat = 10
             static let scaleFactor = smallest / largest
         }
+        struct Pie {
+            static let opacity: CGFloat = 0.5
+            static let inset: CGFloat = 5
+        }
     }
 }
 
 #Preview {
     typealias Card = MemoryGame<String>.Card
-    return CardView(Card(isFaceUp: true, content: "test", id: "testid"), colorList: [.yellow,.pink])
+    return CardView(Card(isFaceUp: true, content: "test", id: "testid"), colorList: [.yellow])
         .padding()
 }

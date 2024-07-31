@@ -21,21 +21,8 @@ struct EmojiMemoryGameView: View {
         VStack (spacing: spacing){
             VStack {
                 title
-                HStack {
-                    Text("Score: \(viewModel.score)")
-                        .font(.title2)
-                    Spacer()
-                    Text("Time Elapsed:")
-                        .font(.title2)
-                    if let startTime = viewModel.timer {
-                        Text(startTime, style: .timer)
-                            .font(.title2)
-                    } else {
-                        Text(viewModel.usedTimeFormatted)
-                            .font(.title2)
-                    }
-                }.padding()
-
+                Text("Score: \(viewModel.score)")
+                    .font(.title2)
             }
             cards
                 .animation(.default, value: viewModel.cards)
@@ -46,10 +33,6 @@ struct EmojiMemoryGameView: View {
                 Spacer()
                 Button("Shuffle") {
                     viewModel.shuffle()
-                }
-                Spacer()
-                Button("Pause Game") {
-                    viewModel.pause()
                 }
             }
             .padding()

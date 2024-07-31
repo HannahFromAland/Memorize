@@ -11,9 +11,6 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable {
     // means settings of this var is private, accessing the var is public
     private(set) var cards: Array<Card>
-    private(set) var startTime: Date? = Date.now
-    private(set) var timeInterval: TimeInterval
-    private(set) var isPause = false
     
     // create a time-based score, initially each match add 20 seconds, and a mismatch -10 seconds, initial total score is 10 * nPair and ticked down
     private(set) var score: Int
@@ -26,8 +23,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: "\(pairIndex + 1)a"))
             cards.append(Card(content: content, id: "\(pairIndex + 1)b"))
         }
-        score = numberOfPairsOfCards * 10
-        timeInterval = TimeInterval(0)
+        score = 0
     }
     
     var currFaceUpCard: Int? {
@@ -44,7 +40,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) {
-            if !isPause && !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
+            print("aaaaa")
+            if !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
                 // first check the pre flip scenario
                 if let potentialFaceUpCard = currFaceUpCard {
                     if cards[potentialFaceUpCard].content == cards[chosenIndex].content {
@@ -62,10 +59,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                         cards[potentialFaceUpCard].isSeen = true
                         cards[chosenIndex].isSeen = true
                     }
-                    if let start = startTime {
-                        score -= Int(Date.now.timeIntervalSince(start))
-                    }
-                    startTime = Date.now
                 } else {
                     // currFaceUpCard is nil, either there is no face up cards or the two facing up cards are not matching
                     currFaceUpCard = chosenIndex
@@ -88,32 +81,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards[index].isSeen = false
         }
         score = cards.count * 5
-        startTime = Date.now
     }
-    
-    mutating func pause() {
-        if isPause {
-            startTime = Date.now - timeInterval
-            isPause = false
-        } else {
-            if let start = startTime {
-                timeInterval = Date().timeIntervalSince(start)
-            }
-            startTime = nil
-            isPause = true
-        }
 
-        
-    }
-    
     // nested struct
     struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
         var debugDescription: String {
             return "\(id): \(content) is \(isFaceUp ? "up" : "down"), \(isMatched ? "matched" : "not matched yet");"
         }
-        
-        
-        var isFaceUp: Bool = false
+        var isFaceUp: Bool = true
         var isMatched: Bool = false
         var isSeen: Bool = false
         let content: CardContent // CardContent is a don't care for us, so do not(cannot) initialize
