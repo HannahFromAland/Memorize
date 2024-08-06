@@ -12,29 +12,34 @@ import SwiftUI
 struct CardView: View {
     typealias Card = MemoryGame<String>.Card
     let card: Card
-    let colorList: [Color]
     
-    init(_ card: Card, colorList: [Color]) {
+    init(_ card: Card) {
         self.card = card
-        self.colorList = colorList
     }
     
-    // @State will create a pointer for isFaceUp which will never change, so the content it is pointing to can change
-    @State var isFaceUp = false
     var body: some View {
-        Pie(endAngle: .degrees(120))
-            .opacity(Constants.Pie.opacity)
-            .overlay(
-                Text(card.content)
-                    .font(.system(size:Constants.FontSize.largest))
-                    .minimumScaleFactor(Constants.FontSize.scaleFactor)
-                    .multilineTextAlignment(.center)
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding(Constants.Pie.inset)
-            )
-            .padding(Constants.inset)
-            .cardify(isFaceUp: card.isFaceUp, isMatched: card.isMatched)
-            .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+        TimelineView(.animation) { timeline in
+            if card.isFaceUp || !card.isMatched {
+                Pie(endAngle: .degrees(card.bonusPercentageRemaining * 360))
+                    .opacity(Constants.Pie.opacity)
+                    .overlay(cardContents.padding(Constants.Pie.inset))
+                    .padding(Constants.inset)
+                    .cardify(isFaceUp: card.isFaceUp)
+                    .transition(.scale)
+            } else {
+                Color.clear
+            }
+        }
+    }
+    
+    var cardContents: some View {
+        Text(card.content)
+            .font(.system(size:Constants.FontSize.largest))
+            .minimumScaleFactor(Constants.FontSize.scaleFactor)
+            .multilineTextAlignment(.center)
+            .aspectRatio(1, contentMode: .fit)
+            .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+            .animation(.easeInOut(duration: 2), value: card.isMatched)
     }
     
     private struct Constants {
@@ -55,6 +60,6 @@ struct CardView: View {
 
 #Preview {
     typealias Card = MemoryGame<String>.Card
-    return CardView(Card(isFaceUp: true, content: "test", id: "testid"), colorList: [.yellow])
+    return CardView(Card(isFaceUp: true, content: "test", id: "testid"))
         .padding()
 }

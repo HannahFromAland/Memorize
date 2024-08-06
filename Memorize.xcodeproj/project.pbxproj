@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410FFB532C600EA2006CD6DB /* FlyingNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410FFB522C600EA2006CD6DB /* FlyingNumber.swift */; };
 		413900972C37AF84002E0E13 /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900962C37AF84002E0E13 /* MemorizeApp.swift */; };
 		413900992C37AF84002E0E13 /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413900982C37AF84002E0E13 /* EmojiMemoryGameView.swift */; };
 		4139009B2C37AF86002E0E13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4139009A2C37AF86002E0E13 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		410FFB522C600EA2006CD6DB /* FlyingNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyingNumber.swift; sourceTree = "<group>"; };
 		413900932C37AF84002E0E13 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		413900962C37AF84002E0E13 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		413900982C37AF84002E0E13 /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				413900962C37AF84002E0E13 /* MemorizeApp.swift */,
 				413900A82C48BB79002E0E13 /* ThemeSelector.swift */,
 				413900982C37AF84002E0E13 /* EmojiMemoryGameView.swift */,
+				410FFB522C600EA2006CD6DB /* FlyingNumber.swift */,
 				41ABD0F32C52128000ABB33F /* CardView.swift */,
 				41ABD1672C59E19B00ABB33F /* Cardify.swift */,
 				41ABD0F82C56069500ABB33F /* Pie.swift */,
@@ -167,6 +170,7 @@
 				413900972C37AF84002E0E13 /* MemorizeApp.swift in Sources */,
 				413900A52C4325E5002E0E13 /* MemoryGame.swift in Sources */,
 				413900A72C4328A8002E0E13 /* EmojiMemoryGame.swift in Sources */,
+				410FFB532C600EA2006CD6DB /* FlyingNumber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
