@@ -14,55 +14,84 @@ struct EmojiMemoryGameView: View {
     
     // Never let ObservedObject equals to anything
     typealias Card = MemoryGame<String>.Card
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var game: EmojiMemoryGame
     private let aspectRatio: CGFloat = 2/3
-    private let spacing: CGFloat = 10
+    private let spacing: CGFloat = 8
+    
+    private func isGameFinish() -> Bool {
+        for card in game.cards {
+            if !card.isMatched {
+                return false
+            }
+        }
+        return true
+    }
     
     var body: some View {
-        VStack (spacing: spacing){
-            VStack {
-                title
+        VStack (spacing: spacing) {
+            if isGameFinish() {
+                Spacer()
+                Text("Success!")
+                    .font(.title2)
                 score
+                Spacer()
+                Button("New Game") {
+                    dealt = Set<Card.ID>()
+                    game.restart()
+                }
+            } else {
+                gameTable
             }
-            cards.foregroundColor(EmojiMemoryGame.intepretColor(viewModel.theme.color))
-            ZStack {
-                HStack {
-                    Button("New Game") {
-                        viewModel.restart()
-                    }
-                    
-                    Spacer()
-                    
-                    Button("Shuffle") {
-                        withAnimation {
-                            viewModel.shuffle()
-                        }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    @ViewBuilder
+    var gameTable: some View {
+        VStack {
+            title
+            score
+        }
+        cards.foregroundStyle(EmojiMemoryGame.intepretColor(game.theme.color))
+        ZStack {
+            HStack {
+                Button("New Game") {
+                    dealt = Set<Card.ID>()
+                    game.restart()
+                }
+                
+                Spacer()
+                
+                Button("Shuffle") {
+                    withAnimation {
+                        game.shuffle()
                     }
                 }
-                deck.foregroundColor(EmojiMemoryGame.intepretColor(viewModel.theme.color))
             }
-            .padding()
-            .frame(alignment: .center)
+            deck.foregroundColor(EmojiMemoryGame.intepretColor(game.theme.color))
+            
         }
+        .padding()
+        .frame(alignment: .top)
     }
     var score: some View {
-        Text("Score: \(viewModel.score)")
+        Text("Score: \(game.score)")
             .font(.title2)
             .animation(nil)
     }
     // Defines the title for the game
     var title: some View {
-        Text("Memorize \(viewModel.theme.name)!")
+        Text("Memorize \(game.theme.name)!")
             .font(.title)
             .padding()
-            .foregroundColor(Color.gray)
+            .foregroundColor(EmojiMemoryGame.intepretColor(game.theme.color))
     }
 
     
     // Defines card part
     private var cards: some View {
         // lazyGrid will use space as less as it can, but HStack takes as much as it can
-        return AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
+        return AspectVGrid(game.cards, aspectRatio: aspectRatio) { card in
             if isDealt(card) {
                 CardView(card)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
@@ -83,7 +112,7 @@ struct EmojiMemoryGameView: View {
     }
     
     private var undealtCards: [Card] {
-        viewModel.cards.filter { !isDealt($0) }
+        game.cards.filter { !isDealt($0) }
     }
     
     @Namespace private var dealingNamespace
@@ -105,7 +134,7 @@ struct EmojiMemoryGameView: View {
     private func deal() {
         // deal the cards
         var delay: TimeInterval = 0
-        for card in viewModel.cards {
+        for card in game.cards {
             withAnimation(.easeInOut(duration: 0.5).delay(delay)) {
                 _ = dealt.insert(card.id)
             }
@@ -117,11 +146,10 @@ struct EmojiMemoryGameView: View {
     
     private func choose(_ card: Card) {
         withAnimation {
-            let scoreBeforeChoose = viewModel.score
-            viewModel.choose(card)
-            let scoreChange = viewModel.score - scoreBeforeChoose
+            let scoreBeforeChoose = game.score
+            game.choose(card)
+            let scoreChange = game.score - scoreBeforeChoose
             lastScoreChange = (scoreChange, causedByCardId: card.id)
-           // print("choose:: scoreChange: \(scoreChange), causedByCardid: \(card.id)")
         }
     }
     
@@ -129,11 +157,10 @@ struct EmojiMemoryGameView: View {
     
     private func scoreChange(causedBy card: Card) -> Int {
         let (amount, id) = lastScoreChange
-        print("scoreChange:: \(card.id == id ? amount: 0)")
         return card.id == id ? amount: 0
     }
 }
 
 #Preview {
-    EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+    EmojiMemoryGameView(game: EmojiMemoryGame(theme: ThemeStore().themes.first!))
 }

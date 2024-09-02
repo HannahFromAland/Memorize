@@ -15,23 +15,23 @@ class EmojiMemoryGame: ObservableObject {
     // Normally static properties goes first in the class
     // class only gets free init which has nothing(no argument), so still needs to be inited
     // make it private means only ViewModel can see it, otherwise View can directly access public model
-    private(set) var theme : ThemeSelector.Theme
+    private(set) var theme : Theme
     private var numberOfPairs: Int
     @Published private var model: MemoryGame<String>
     
-    init() {
-        let randomThemeId = Int.random(in: 0..<5)
-        numberOfPairs = 4
-        theme = ThemeSelector().select(randomThemeId, nPair: numberOfPairs)
-        model = EmojiMemoryGame.createMemorizeGame(theme: self.theme, nPair: self.numberOfPairs)
+    init(theme: Theme) {
+        self.theme = theme
+        numberOfPairs = theme.numberOfPairs
+        model = EmojiMemoryGame.createMemorizeGame(theme: self.theme, nPair: theme.numberOfPairs)
+        model.shuffle()
     }
     
-    private static func createMemorizeGame(theme: ThemeSelector.Theme, nPair: Int) -> MemoryGame<String> {
+    private static func createMemorizeGame(theme: Theme, nPair: Int) -> MemoryGame<String> {
         return MemoryGame(
             numberOfPairsOfCards: nPair) { pairIndex in
-                if theme.emojiSet.indices.contains(pairIndex) && !theme.emojiSet.isEmpty {
+                if theme.emojis.count > pairIndex {
                     // the list of emoji content is always not empty
-                    return theme.emojiSet.randomElement()!
+                    return String(theme.emojis.randomElement()!)
                 } else {
                     return "😱"
                 }
@@ -81,10 +81,7 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     func restart() {
-        let randomThemeId = Int.random(in: 0..<5)
-        numberOfPairs = 4
-        theme = ThemeSelector().select(randomThemeId, nPair: numberOfPairs)
-        model = EmojiMemoryGame.createMemorizeGame(theme: self.theme, nPair: theme.nPair ?? Int.random(in: 1..<theme.emojiSet.count))
+        model = EmojiMemoryGame.createMemorizeGame(theme: self.theme, nPair: self.theme.numberOfPairs)
         model.shuffle()
     }
 }
