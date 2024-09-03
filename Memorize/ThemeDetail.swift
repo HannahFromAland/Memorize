@@ -20,19 +20,15 @@ struct ThemeDetail: View {
                 TextField("Add Emojis Here", text: $theme.emojis)
             }
             Section(header: Text("Number of Card Pairs")) {
-                TextField("Number of Pairs", text: Binding (
-                    get: {
-                        String(theme.numberOfPairs)
-                    },
-                    set: {
-                        if let value = Int($0) {
-                            theme.numberOfPairs = value
-                        }
-                    }
-                ))
+                Stepper(
+                    value: $theme.numberOfPairs,
+                    in: 1...theme.emojis.count/2,
+                    step: 1
+                ) {
+                    Text("Total card pairs: \(theme.numberOfPairs)")
+                }
             }
             Section(header: Text("Card Color")) {
-//                TextField("Color", text: $theme.color)
                 Picker("Color", selection: $theme.color) {
                     Text("Orange").tag("orange")
                     Text("Mint").tag("mint")

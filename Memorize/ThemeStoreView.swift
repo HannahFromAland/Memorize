@@ -23,20 +23,8 @@ struct ThemeStoreView: View {
                             Text(theme.emojis).lineLimit(1)
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role:.destructive){
-                                if let index = themeStore.themes.firstIndex(where: {$0.id == theme.id}) {
-                                    themeStore.themes.remove(at:index)
-                                }
-                                
-                            } label: {
-                                Image(systemName: "minus.circle")
-                            }
-                            Button {
-                                selectedTheme = theme
-                            } label: {
-                                Image(systemName: "square.and.pencil")
-                            }
-
+                            deleteButton(theme)
+                            editButton(theme)
                         }
                     }
 
@@ -44,12 +32,7 @@ struct ThemeStoreView: View {
             }
             .navigationTitle("Theme Chooser")
             .toolbar {
-                Button {
-                    themeStore.append(name: "", emojis: "")
-                    showThemeDetail = true
-                } label: {
-                    Image(systemName: "plus.circle")
-                }
+                addThemeButton
             }
             .navigationDestination(for: Theme.self) { theme in
                EmojiMemoryGameView(game: EmojiMemoryGame(theme: theme))
@@ -73,6 +56,34 @@ struct ThemeStoreView: View {
             ThemeDetail(theme: $themeStore.themes[themeStore.themes.count - 1])
         }
 
+    }
+    
+    private func deleteButton(_ theme: Theme) -> some View {
+        Button(role:.destructive){
+            if let index = themeStore.themes.firstIndex(where: {$0.id == theme.id}) {
+                themeStore.themes.remove(at:index)
+            }
+            
+        } label: {
+            Image(systemName: "minus.circle")
+        }
+    }
+    
+    private func editButton(_ theme: Theme) -> some View {
+        Button {
+            selectedTheme = theme
+        } label: {
+            Image(systemName: "square.and.pencil")
+        }
+    }
+    
+    private var addThemeButton: some View {
+        Button {
+            themeStore.append(name: "", emojis: "")
+            showThemeDetail = true
+        } label: {
+            Image(systemName: "plus.circle")
+        }
     }
 }
 #Preview {
